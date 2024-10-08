@@ -89,13 +89,12 @@ function Context({ children }: { children: React.ReactNode }) {
     }
   };
 
-  console.log(askedQuestions.length, "askedQuestions.length");
 
   const getNextRandomQuestion = () => {
     if (!questionsArray) return;
 
     if (askedQuestions.length < questionsArray.length) {
-      let remainingQuestions = questionsArray.filter(
+      const remainingQuestions = questionsArray.filter(
         (q) => !askedQuestions.includes(q)
       );
       const randomIndex = Math.floor(Math.random() * remainingQuestions.length);

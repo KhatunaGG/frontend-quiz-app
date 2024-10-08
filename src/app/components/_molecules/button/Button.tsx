@@ -30,10 +30,10 @@ const Button = ({
   setClickCount,
   isFalseAnswer,
 }: ButtonPropType) => {
+  const path = usePathname();
   const context = useContext(GlobalContext);
   if (!context) return null;
   const { isMobile, isDesktop, handleClick, filteredData, getAnswer } = context;
-  const path = usePathname();
 
   const imageWidth = isMobile ? 28.57 : 40;
   const imageHeight = isMobile ? 28.57 : 40;

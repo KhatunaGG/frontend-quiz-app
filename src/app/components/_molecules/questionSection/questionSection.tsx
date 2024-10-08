@@ -1,11 +1,11 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import ProgressLine from "../progress/ProgressLine";
 import SubmitButton from "../submitButton/SubmitButton";
 import Button from "../button/Button";
 import { GlobalContext } from "@/app/context/Context";
 
-const questionSection = () => {
+const QuestionSection = () => {
   const context = useContext(GlobalContext);
   if (!context) return null;
   const {
@@ -72,4 +72,4 @@ const questionSection = () => {
   );
 };
 
-export default questionSection;
+export default QuestionSection;
