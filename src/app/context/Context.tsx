@@ -48,78 +48,78 @@ function Context({ children }: { children: React.ReactNode }) {
     }
   }, [randomQuestion]);
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const storedCount = JSON.parse(localStorage.getItem("count") || "0");
-  //     const storedAskedQuestions = JSON.parse(
-  //       localStorage.getItem("askedQuestions") || "[]"
-  //     );
-  //     const storedFilteredData = JSON.parse(
-  //       localStorage.getItem("filteredData") || "null"
-  //     );
-  //     const storedRandomQuestion = JSON.parse(
-  //       localStorage.getItem("randomQuestion") || "null"
-  //     );
-  //     const storedSelectedAnswer = JSON.parse(
-  //       localStorage.getItem("selectedAnswer") || "null"
-  //     );
-  //     const storedClickCount = JSON.parse(
-  //       localStorage.getItem("clickCount") || "0"
-  //     );
-  //     const storedOptionsWithLabels = JSON.parse(
-  //       localStorage.getItem("optionsWithLabels") || "[]"
-  //     );
-  //     const storedQuestionsArray = JSON.parse(
-  //       localStorage.getItem("questionsArray") || "null"
-  //     );
-  //     const storedIsChecked = JSON.parse(
-  //       localStorage.getItem("isChecked") || "false"
-  //     );
-  //     setCount(storedCount);
-  //     setAskedQuestions(storedAskedQuestions);
-  //     setFilteredData(storedFilteredData);
-  //     setRandomQuestion(storedRandomQuestion);
-  //     setSelectedAnswer(storedSelectedAnswer);
-  //     setClickCount(storedClickCount);
-  //     setOptionsWithLabels(storedOptionsWithLabels);
-  //     setQuestionsArray(storedQuestionsArray);
-  //     setIsChecked(storedIsChecked);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedCount = JSON.parse(localStorage.getItem("count") || "0");
+      const storedAskedQuestions = JSON.parse(
+        localStorage.getItem("askedQuestions") || "[]"
+      );
+      const storedFilteredData = JSON.parse(
+        localStorage.getItem("filteredData") || "null"
+      );
+      const storedRandomQuestion = JSON.parse(
+        localStorage.getItem("randomQuestion") || "null"
+      );
+      const storedSelectedAnswer = JSON.parse(
+        localStorage.getItem("selectedAnswer") || "null"
+      );
+      const storedClickCount = JSON.parse(
+        localStorage.getItem("clickCount") || "0"
+      );
+      const storedOptionsWithLabels = JSON.parse(
+        localStorage.getItem("optionsWithLabels") || "[]"
+      );
+      const storedQuestionsArray = JSON.parse(
+        localStorage.getItem("questionsArray") || "null"
+      );
+      const storedIsChecked = JSON.parse(
+        localStorage.getItem("isChecked") || "false"
+      );
+      setCount(storedCount);
+      setAskedQuestions(storedAskedQuestions);
+      setFilteredData(storedFilteredData);
+      setRandomQuestion(storedRandomQuestion);
+      setSelectedAnswer(storedSelectedAnswer);
+      setClickCount(storedClickCount);
+      setOptionsWithLabels(storedOptionsWithLabels);
+      setQuestionsArray(storedQuestionsArray);
+      setIsChecked(storedIsChecked);
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   if (
-  //     typeof window !== "undefined" &&
-  //     optionsWithLabels !== null &&
-  //     filteredData !== null &&
-  //     questionsArray !== null &&
-  //     randomQuestion !== null &&
-  //     selectedAnswer !== null
-  //   ) {
-  //     localStorage.setItem("count", JSON.stringify(count));
-  //     localStorage.setItem("askedQuestions", JSON.stringify(askedQuestions));
-  //     localStorage.setItem("filteredData", JSON.stringify(filteredData));
-  //     localStorage.setItem("randomQuestion", JSON.stringify(randomQuestion));
-  //     localStorage.setItem("selectedAnswer", JSON.stringify(selectedAnswer));
-  //     localStorage.setItem("clickCount", JSON.stringify(clickCount));
-  //     localStorage.setItem(
-  //       "optionsWithLabels",
-  //       JSON.stringify(optionsWithLabels)
-  //     );
-  //     localStorage.setItem("questionsArray", JSON.stringify(questionsArray));
-  //     localStorage.setItem("isChecked", JSON.stringify(isChecked));
-  //   }
-  // }, [
-  //   count,
-  //   askedQuestions,
-  //   filteredData,
-  //   randomQuestion,
-  //   selectedAnswer,
-  //   clickCount,
-  //   optionsWithLabels,
-  //   questionsArray,
-  //   isChecked,
-  // ]);
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      optionsWithLabels !== null &&
+      filteredData !== null &&
+      questionsArray !== null &&
+      randomQuestion !== null &&
+      selectedAnswer !== null
+    ) {
+      localStorage.setItem("count", JSON.stringify(count));
+      localStorage.setItem("askedQuestions", JSON.stringify(askedQuestions));
+      localStorage.setItem("filteredData", JSON.stringify(filteredData));
+      localStorage.setItem("randomQuestion", JSON.stringify(randomQuestion));
+      localStorage.setItem("selectedAnswer", JSON.stringify(selectedAnswer));
+      localStorage.setItem("clickCount", JSON.stringify(clickCount));
+      localStorage.setItem(
+        "optionsWithLabels",
+        JSON.stringify(optionsWithLabels)
+      );
+      localStorage.setItem("questionsArray", JSON.stringify(questionsArray));
+      localStorage.setItem("isChecked", JSON.stringify(isChecked));
+    }
+  }, [
+    count,
+    askedQuestions,
+    filteredData,
+    randomQuestion,
+    selectedAnswer,
+    clickCount,
+    optionsWithLabels,
+    questionsArray,
+    isChecked,
+  ]);
 
   useEffect(() => {
     const storedMode = localStorage.getItem("darkMode");
