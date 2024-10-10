@@ -9,7 +9,7 @@ const ScoreSection = () => {
   const path = usePathname();
   const context = useContext(GlobalContext);
   if (!context) return null;
-  const { score, filteredData, resetQuiz } = context;
+  const { count, filteredData, resetQuiz } = context;
 
   return (
     <div className="flex flex-col gap-10 md:gap-[64px] lg:flex-row lg:gap-[12.32%] md:pb-[167px]">
@@ -46,7 +46,7 @@ const ScoreSection = () => {
           </div>
 
           <h2 className="font-medium text-[#313E51] text-[88px] leading-[88px] md:text-[144px] md:leading-[144px] md:mb-4 dark:text-white transition-colors duration-700 ease-in-out">
-            {score}
+            {count}
           </h2>
 
           <p className="text-[#626C7F] font-normal text-[18x] leading-[18px] md:text-[24px] md:leading-[36px] dark:text-white transition-colors duration-700 ease-in-out">

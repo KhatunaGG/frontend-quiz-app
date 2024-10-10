@@ -5,4 +5,6 @@ export {default as TabletEllipse } from './tabletEllipse/TabletEllipse'
 export {default as Moon } from './moon/Moon'
 export {default as PersonIcon } from './personIcon/PersonIcon'
 export {default as Sun } from './sun/Sun'
+export {default as GreenIcon } from './greenIcon/GreenIcon'
+export {default as RedIcon } from './redIcon/RedIcon'
 

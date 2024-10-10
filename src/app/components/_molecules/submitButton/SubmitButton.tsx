@@ -1,36 +1,21 @@
 "use client";
-import { QuestionType } from "@/app/context/Context";
-import { Dispatch, SetStateAction } from "react";
-
-export type SubmitButtonType = {
-  handleSubmit?: () => void;
-  selectedAnswer?: string | null;
-  setClickCount?: Dispatch<SetStateAction<number>>;
-  clickCount?: number;
-  askedQuestions?: QuestionType[];
-  setAskedQuestions?: Dispatch<SetStateAction<QuestionType[]>>;
-  resetQuiz?: () => void;
-  setScore?: Dispatch<SetStateAction<number>>;
-};
+import { SubmitButtonType } from "@/app/interfaces/interface";
 
 function SubmitButton({
   handleSubmit,
-  setClickCount,
   clickCount,
   askedQuestions,
   setAskedQuestions,
   resetQuiz,
+  selectedAnswer,
 }: SubmitButtonType) {
-
-
   return (
     <button
       onClick={() => {
-        if (clickCount === 1 && handleSubmit && setClickCount) {
+        if (handleSubmit) {
           handleSubmit();
-          setClickCount(0);
         } else if (
-          clickCount === 1 &&
+          clickCount === 0 &&
           askedQuestions?.length === 10 &&
           setAskedQuestions?.length === 0
         ) {
@@ -44,8 +29,10 @@ function SubmitButton({
       leading-[18px] font-medium md:rounded-3xl md:text-[28px] md:leading-[28px] py-[19px] md:py-8 
       transition duration-300 ease-in-out hover:bg-[#A729F580]"
     >
-      {askedQuestions && askedQuestions.length > 0
+      {!selectedAnswer && askedQuestions && askedQuestions.length > 0
         ? "Submit Answer"
+        : selectedAnswer && askedQuestions && askedQuestions.length > 0
+        ? "Next Question"
         : "Play Again"}
     </button>
   );
