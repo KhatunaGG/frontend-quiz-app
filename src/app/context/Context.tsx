@@ -68,9 +68,6 @@ function Context({ children }: { children: React.ReactNode }) {
       const storedOptionsWithLabels = JSON.parse(
         localStorage.getItem("optionsWithLabels") || "[]"
       );
-      const storedQuestionsArray = JSON.parse(
-        localStorage.getItem("questionsArray") || "null"
-      );
       const storedIsChecked = JSON.parse(
         localStorage.getItem("isChecked") || "false"
       );
