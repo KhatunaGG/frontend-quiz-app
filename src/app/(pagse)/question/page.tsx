@@ -1,4 +1,4 @@
-import QuestionSection from "@/app/components/_molecules/questionSection/questionSection";
+import QuestionSection from "@/app/components/_molecules/questionSection/QuestionSection";
 
 export default function page() {
   return (

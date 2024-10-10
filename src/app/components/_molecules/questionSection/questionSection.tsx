@@ -17,17 +17,12 @@ const QuestionSection = () => {
     selectedAnswer,
     clickCount,
     setClickCount,
-    setIsFalseAnswer,
-    isFalseAnswer,
-    isAnswer,
     setAskedQuestions,
     score,
+    optionsWithLabels,
+    setScore,
   } = context;
 
-  const optionsWithLabels = randomQuestion?.options.map((option, i) => {
-    const label = String.fromCharCode(65 + i);
-    return { label, option };
-  });
 
   return (
     <div className="flex flex-col lg:flex-row lg:justify-between">
@@ -43,17 +38,16 @@ const QuestionSection = () => {
       <div className="lg:w-[48.62%] flex flex-col gap-3 md:gap-8">
         <div className="flex flex-col gap-3 md:gap-6">
           {optionsWithLabels?.map(({ label, option }, i) => (
+
             <Button
               key={i}
               option={option}
               label={label}
-              getAnswer={getAnswer}
-              isSelected={selectedAnswer === option}
+              onClick={() => getAnswer(option)}
               clickCount={clickCount}
               setClickCount={setClickCount}
-              setIsFalseAnswer={setIsFalseAnswer}
-              isFalseAnswer={isFalseAnswer === isAnswer}
               randomQuestion={randomQuestion}
+              selectedAnswer={selectedAnswer}
             />
           ))}
         </div>
@@ -61,11 +55,11 @@ const QuestionSection = () => {
         <SubmitButton
           handleSubmit={handleSubmit}
           selectedAnswer={selectedAnswer}
-          isFalseAnswer={isFalseAnswer}
           setClickCount={setClickCount}
           clickCount={clickCount}
           askedQuestions={askedQuestions}
           setAskedQuestions={setAskedQuestions}
+          setScore={setScore}
         />
       </div>
     </div>

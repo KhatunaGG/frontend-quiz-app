@@ -1,5 +1,3 @@
-
-
 function Sun({ isChecked }: { isChecked: boolean }) {
   return (
     <svg

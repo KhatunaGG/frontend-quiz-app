@@ -22,7 +22,7 @@ const TabletEllipse = () => {
           r="416.5"
           stroke={isChecked ? "#2D3949" : "#EDF1F9"}
           strokeWidth="144"
-          shape-rendering="crispEdges"
+          shapeRendering="crispEdges"
           className="transition-colors duration-700 ease-in-out"
         />
       </g>
@@ -34,9 +34,9 @@ const TabletEllipse = () => {
           width="985"
           height="985"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"

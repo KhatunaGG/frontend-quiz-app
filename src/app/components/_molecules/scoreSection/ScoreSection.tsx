@@ -53,7 +53,6 @@ const ScoreSection = () => {
             out of {filteredData?.questions.length}
           </p>
         </div>
-
         <SubmitButton resetQuiz={resetQuiz} />
       </div>
     </div>

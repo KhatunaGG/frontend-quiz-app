@@ -1,17 +1,16 @@
 "use client";
 import { QuestionType } from "@/app/context/Context";
-import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 
 export type SubmitButtonType = {
   handleSubmit?: () => void;
   selectedAnswer?: string | null;
-  isFalseAnswer?: string | undefined | null;
   setClickCount?: Dispatch<SetStateAction<number>>;
   clickCount?: number;
   askedQuestions?: QuestionType[];
   setAskedQuestions?: Dispatch<SetStateAction<QuestionType[]>>;
   resetQuiz?: () => void;
+  setScore?: Dispatch<SetStateAction<number>>;
 };
 
 function SubmitButton({
@@ -22,7 +21,7 @@ function SubmitButton({
   setAskedQuestions,
   resetQuiz,
 }: SubmitButtonType) {
-  const router = useRouter();
+
 
   return (
     <button
@@ -36,7 +35,6 @@ function SubmitButton({
           setAskedQuestions?.length === 0
         ) {
           setAskedQuestions([]);
-          router.push("/score");
         }
         if (resetQuiz) {
           resetQuiz();

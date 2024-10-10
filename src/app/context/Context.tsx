@@ -10,11 +10,9 @@ import quizData from "../data.json";
 import { useRouter } from "next/navigation";
 
 export type GlobalContextType = {
-  darkMode: boolean;
   isDesktop: boolean;
   isTablet: boolean;
   isMobile: boolean;
-  toggleDarkMode: () => void;
   data: QuizType[];
   handleClick: (value: string) => void;
   filteredData: QuizType | null;
@@ -26,14 +24,14 @@ export type GlobalContextType = {
   selectedAnswer: string | null;
   clickCount: number;
   setClickCount: Dispatch<SetStateAction<number>>;
-  setIsFalseAnswer: Dispatch<SetStateAction<string | null | undefined>>;
-  isFalseAnswer: string | null | undefined;
   score: number;
-  isAnswer: string | null;
   setAskedQuestions: Dispatch<SetStateAction<QuestionType[]>>;
   resetQuiz: () => void;
   isChecked: boolean;
   setIsChecked: Dispatch<SetStateAction<boolean>>;
+  optionsWithLabels: OptionsType;
+  setScore: Dispatch<SetStateAction<number>>;
+  handleCheckboxChange: () => void;
 };
 
 export const GlobalContext = createContext<GlobalContextType | null>(null);
@@ -51,8 +49,14 @@ export type QuestionType = {
   answer: string;
 };
 
+export type OptionsType =
+  | {
+      label: string;
+      option: string;
+    }[]
+  | undefined;
+
 function Context({ children }: { children: React.ReactNode }) {
-  const [darkMode, setDarkMode] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -68,15 +72,122 @@ function Context({ children }: { children: React.ReactNode }) {
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [clickCount, setClickCount] = useState(0);
-  const [isFalseAnswer, setIsFalseAnswer] = useState<string | null>();
-  const [isAnswer, setIsAnswer] = useState<string | null>(null);
   const [isChecked, setIsChecked] = useState(false);
+  const [optionsWithLabels, setOptionsWithLabels] = useState<OptionsType>([]);
+  const router = useRouter();
 
   useEffect(() => {
     setData(quizData);
   }, []);
 
-  const router = useRouter();
+  useEffect(() => {
+    if (randomQuestion) {
+      const labels = randomQuestion.options.map((option, i) => ({
+        label: String.fromCharCode(65 + i),
+        option,
+      }));
+      setOptionsWithLabels(labels);
+    }
+  }, [randomQuestion]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedScore = JSON.parse(localStorage.getItem("score") || "0");
+      const storedAskedQuestions = JSON.parse(
+        localStorage.getItem("askedQuestions") || "[]"
+      );
+      const storedFilteredData = JSON.parse(
+        localStorage.getItem("filteredData") || "null"
+      );
+      const storedRandomQuestion = JSON.parse(
+        localStorage.getItem("randomQuestion") || "null"
+      );
+      const storedSelectedAnswer = JSON.parse(
+        localStorage.getItem("selectedAnswer") || "null"
+      );
+      const storedClickCount = JSON.parse(
+        localStorage.getItem("clickCount") || "0"
+      );
+      const storedOptionsWithLabels = JSON.parse(
+        localStorage.getItem("optionsWithLabels") || "[]"
+      );
+      const storedQuestionsArray = JSON.parse(
+        localStorage.getItem("questionsArray") || "null"
+      );
+      const storedIsChecked = JSON.parse(
+        localStorage.getItem("isChecked") || "false"
+      );
+      setScore(storedScore);
+      setAskedQuestions(storedAskedQuestions);
+      setFilteredData(storedFilteredData);
+      setRandomQuestion(storedRandomQuestion);
+      setSelectedAnswer(storedSelectedAnswer);
+      setClickCount(storedClickCount);
+      setOptionsWithLabels(storedOptionsWithLabels);
+      setQuestionsArray(storedQuestionsArray);
+      setIsChecked(storedIsChecked);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      optionsWithLabels !== null &&
+      filteredData !== null &&
+      questionsArray !== null &&
+      randomQuestion !== null &&
+      selectedAnswer !== null
+    ) {
+      localStorage.setItem("score", JSON.stringify(score));
+      localStorage.setItem("askedQuestions", JSON.stringify(askedQuestions));
+      localStorage.setItem("filteredData", JSON.stringify(filteredData));
+      localStorage.setItem("randomQuestion", JSON.stringify(randomQuestion));
+      localStorage.setItem("selectedAnswer", JSON.stringify(selectedAnswer));
+      localStorage.setItem("clickCount", JSON.stringify(clickCount));
+      localStorage.setItem(
+        "optionsWithLabels",
+        JSON.stringify(optionsWithLabels)
+      );
+      localStorage.setItem("questionsArray", JSON.stringify(questionsArray));
+      localStorage.setItem("isChecked", JSON.stringify(isChecked));
+    }
+  }, [
+    score,
+    askedQuestions,
+    filteredData,
+    randomQuestion,
+    selectedAnswer,
+    clickCount,
+    optionsWithLabels,
+    questionsArray,
+    isChecked,
+  ]);
+
+  useEffect(() => {
+    const storedMode = localStorage.getItem("darkMode");
+    if (storedMode === "true") {
+      document.documentElement.classList.add("dark");
+      setIsChecked(true);
+    } else {
+      document.documentElement.classList.remove("dark");
+      setIsChecked(false);
+    }
+  }, [setIsChecked]);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    changeMode();
+  };
+
+  const changeMode = () => {
+    if (!isChecked) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("darkMode", "false");
+    }
+  };
 
   const handleClick = (title: string | undefined) => {
     const filtered = data.find((el) => el.title === title);
@@ -88,7 +199,6 @@ function Context({ children }: { children: React.ReactNode }) {
       router.push("/question");
     }
   };
-
 
   const getNextRandomQuestion = () => {
     if (!questionsArray) return;
@@ -104,8 +214,6 @@ function Context({ children }: { children: React.ReactNode }) {
       setAskedQuestions((prev) => [...prev, nextQuestion]);
     } else {
       router.push("/score");
-      // setRandomQuestion(null);
-      // setAskedQuestions([]);
     }
   };
 
@@ -116,37 +224,24 @@ function Context({ children }: { children: React.ReactNode }) {
   }, [filteredData]);
 
   const getAnswer = (answer: string) => {
+    setSelectedAnswer(answer);
     if (randomQuestion?.answer === answer) {
       setScore((prev) => prev + 1);
-      setSelectedAnswer(answer);
-      setIsAnswer(answer);
     } else {
-      setIsFalseAnswer(answer);
     }
   };
-
-  //reset function:
-  //  const resetQuiz = () => {
-  //   setAskedQuestions([]);
-  //   setScore(0);
-  //   getNextRandomQuestion(); // Start with the first random question again
-  // };
 
   const handleSubmit = () => {
     getNextRandomQuestion();
   };
-
   const resetQuiz = () => {
     setFilteredData(null);
-
     setRandomQuestion(null);
     setAskedQuestions([]);
-
     router.push("/");
+    setSelectedAnswer(null);
     setScore(0);
   };
-
-  const toggleDarkMode = () => setDarkMode(!darkMode);
 
   const checkWindowSize = () => {
     const windowWidth = window.innerWidth;
@@ -176,11 +271,9 @@ function Context({ children }: { children: React.ReactNode }) {
   return (
     <GlobalContext.Provider
       value={{
-        darkMode,
         isDesktop,
         isTablet,
         isMobile,
-        toggleDarkMode,
         data,
         handleClick,
         filteredData,
@@ -190,16 +283,16 @@ function Context({ children }: { children: React.ReactNode }) {
         handleSubmit,
         getAnswer,
         selectedAnswer,
-        setIsFalseAnswer,
-        isFalseAnswer,
         clickCount,
         setClickCount,
         score,
-        isAnswer,
         setAskedQuestions,
         resetQuiz,
         isChecked,
         setIsChecked,
+        optionsWithLabels,
+        setScore,
+        handleCheckboxChange
       }}
     >
       <div>{children}</div>

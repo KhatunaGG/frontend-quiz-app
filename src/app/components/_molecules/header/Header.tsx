@@ -9,20 +9,7 @@ const Header = () => {
   const path = usePathname();
   const context = useContext(GlobalContext);
   if (!context) return null;
-  const { filteredData, isChecked, setIsChecked } = context;
-
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-    changeMode();
-  };
-
-  const changeMode = () => {
-    if (!isChecked) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  };
+  const { filteredData, isChecked, handleCheckboxChange } = context;
 
   return (
     <div
@@ -40,22 +27,21 @@ const Header = () => {
           className="w-10 h-10 rounded-md flex items-center justify-center md:w-[56px] md:h-[56px]"
         >
           <Image
-            src={filteredData?.icon || ""}
-            alt={filteredData?.title || ""}
-            height={56}
-            width={56}
+            src={filteredData?.icon || "/assets/cssIcon.svg"}
+            alt={filteredData?.title || "Title"}
+            height={35.01}
+            width={29.99}
+            className="w-[28.57px] h-[28.57px] md:w-[29.99px] md:h-[35.01px]"
           />
         </div>
-
         <h2 className="text-[18px] capitalize font-medium dark:text-white transition-colors duration-700 ease-in-out">
           {filteredData?.title}
         </h2>
       </div>
       <div className="flex items-center gap-2 md:gap-4">
         <Sun isChecked={isChecked} />
-
         <label
-          className=" checkbox-label w-8 h-[20px] md: md:w-[48px] md:h-[28px] rounded-full shadow-md"
+          className="checkbox-label w-8 h-[20px] md: md:w-[48px] md:h-[28px] rounded-full shadow-md"
           htmlFor="check"
         >
           <input
@@ -65,10 +51,8 @@ const Header = () => {
             checked={isChecked}
             onChange={handleCheckboxChange}
           />
-
           <span className="switch-circle "></span>
         </label>
-
         <Moon isChecked={isChecked} />
       </div>
     </div>

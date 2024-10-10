@@ -20,7 +20,6 @@ function EllipseDown() {
         cx="488.5"
         cy="488.5"
         r="416.5"
-        // stroke="#EDF1F9"
         stroke={isChecked ? "#2D3949" : "#EDF1F9"}
         strokeWidth="144"
         className="transition-colors duration-700 ease-in-out"

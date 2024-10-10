@@ -19,7 +19,6 @@ function DesktopEllipse() {
         cx="-50.5"
         cy="75.5"
         r="416.5"
-        // stroke="#EDF1F9"
         stroke={isChecked ? "#2D3949" : "#EDF1F9"}
         strokeWidth="144"
         className="transition-colors duration-700 ease-in-out"

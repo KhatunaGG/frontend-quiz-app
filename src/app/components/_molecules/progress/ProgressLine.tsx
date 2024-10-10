@@ -12,7 +12,7 @@ const ProgressLine = ({ value }: { value: number }) => {
   };
 
   return (
-    <div className="w-full py-1 bg-white rounded-md mb-10 md:mb-[64px]">
+    <div className="w-full py-1 bg-white rounded-md mb-10 md:mb-[64px] dark:bg-[#3B4D66] transition-colors duration-700 ease-in-out">
       <LinearProgress
         variant="determinate"
         value={progressValue}
