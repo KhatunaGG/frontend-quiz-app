@@ -7,7 +7,6 @@ export type GlobalContextType = {
   data: QuizType[];
   handleClick: (value: string) => void;
   filteredData: QuizType | null;
-  questionsArray: QuestionType[] | null;
   randomQuestion: QuestionType | null;
   askedQuestions: QuestionType[];
   handleSubmit: () => void;

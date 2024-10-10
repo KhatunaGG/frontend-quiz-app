@@ -9,22 +9,45 @@ function SubmitButton({
   resetQuiz,
   selectedAnswer,
 }: SubmitButtonType) {
+
+  const submitAnswer = () => {
+    if (resetQuiz) {
+      resetQuiz();
+    } else {
+      if (handleSubmit) {
+        handleSubmit();
+      } else if (
+        clickCount === 0 &&
+        askedQuestions?.length === 10 &&
+        setAskedQuestions?.length === 0
+      ) {
+        setAskedQuestions([]);
+      }
+
+    }
+  }
+
+
+
+
   return (
     <button
-      onClick={() => {
-        if (handleSubmit) {
-          handleSubmit();
-        } else if (
-          clickCount === 0 &&
-          askedQuestions?.length === 10 &&
-          setAskedQuestions?.length === 0
-        ) {
-          setAskedQuestions([]);
-        }
-        if (resetQuiz) {
-          resetQuiz();
-        }
-      }}
+      // onClick={() => {
+      //   if (handleSubmit) {
+      //     handleSubmit();
+      //   } else if (
+      //     clickCount === 0 &&
+      //     askedQuestions?.length === 10 &&
+      //     setAskedQuestions?.length === 0
+      //   ) {
+      //     setAskedQuestions([]);
+      //   }
+      //   if (resetQuiz) {
+      //     resetQuiz();
+      //   }
+      // }}
+
+      onClick={submitAnswer}
       className="w-full bg-[#A729F5] rounded-[12px] text-white text-[18px] 
       leading-[18px] font-medium md:rounded-3xl md:text-[28px] md:leading-[28px] py-[19px] md:py-8 
       transition duration-300 ease-in-out hover:bg-[#A729F580]"

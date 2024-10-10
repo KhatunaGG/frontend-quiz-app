@@ -18,9 +18,6 @@ function Context({ children }: { children: React.ReactNode }) {
   const [isMobile, setIsMobile] = useState(false);
   const [data, setData] = useState<QuizType[]>([]);
   const [filteredData, setFilteredData] = useState<QuizType | null>(null);
-  const [questionsArray, setQuestionsArray] = useState<QuestionType[] | null>(
-    null
-  );
   const [askedQuestions, setAskedQuestions] = useState<QuestionType[]>([]);
   const [randomQuestion, setRandomQuestion] = useState<QuestionType | null>(
     null
@@ -32,6 +29,8 @@ function Context({ children }: { children: React.ReactNode }) {
   const [optionsWithLabels, setOptionsWithLabels] = useState<OptionsType>([]);
   const [option, setOption] = useState<string | null>();
   const router = useRouter();
+
+  console.log(count, 'count')
 
 
   useEffect(() => {
@@ -50,7 +49,7 @@ function Context({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedCount = JSON.parse(localStorage.getItem("count") || "0");
+      
       const storedAskedQuestions = JSON.parse(
         localStorage.getItem("askedQuestions") || "[]"
       );
@@ -75,15 +74,15 @@ function Context({ children }: { children: React.ReactNode }) {
       const storedIsChecked = JSON.parse(
         localStorage.getItem("isChecked") || "false"
       );
-      setCount(storedCount);
+      const storedCount = JSON.parse(localStorage.getItem("count") || "0");
       setAskedQuestions(storedAskedQuestions);
       setFilteredData(storedFilteredData);
       setRandomQuestion(storedRandomQuestion);
       setSelectedAnswer(storedSelectedAnswer);
       setClickCount(storedClickCount);
       setOptionsWithLabels(storedOptionsWithLabels);
-      setQuestionsArray(storedQuestionsArray);
       setIsChecked(storedIsChecked);
+      setCount(storedCount);
     }
   }, []);
 
@@ -92,11 +91,9 @@ function Context({ children }: { children: React.ReactNode }) {
       typeof window !== "undefined" &&
       optionsWithLabels !== null &&
       filteredData !== null &&
-      questionsArray !== null &&
       randomQuestion !== null &&
       selectedAnswer !== null
     ) {
-      localStorage.setItem("count", JSON.stringify(count));
       localStorage.setItem("askedQuestions", JSON.stringify(askedQuestions));
       localStorage.setItem("filteredData", JSON.stringify(filteredData));
       localStorage.setItem("randomQuestion", JSON.stringify(randomQuestion));
@@ -106,19 +103,18 @@ function Context({ children }: { children: React.ReactNode }) {
         "optionsWithLabels",
         JSON.stringify(optionsWithLabels)
       );
-      localStorage.setItem("questionsArray", JSON.stringify(questionsArray));
       localStorage.setItem("isChecked", JSON.stringify(isChecked));
+      localStorage.setItem("count", JSON.stringify(count));
     }
   }, [
-    count,
     askedQuestions,
     filteredData,
     randomQuestion,
     selectedAnswer,
     clickCount,
     optionsWithLabels,
-    questionsArray,
     isChecked,
+    count,
   ]);
 
   useEffect(() => {
@@ -152,7 +148,6 @@ function Context({ children }: { children: React.ReactNode }) {
     const filtered = data.find((el) => el.title === title);
     if (filtered) {
       setFilteredData(filtered);
-      setQuestionsArray(filtered.questions);
       setAskedQuestions([]);
       router.push("/question");
     }
@@ -202,6 +197,7 @@ function Context({ children }: { children: React.ReactNode }) {
   };
 
   const resetQuiz = () => {
+    localStorage.clear();
     setFilteredData(null);
     setRandomQuestion(null);
     setAskedQuestions([]);
@@ -244,7 +240,6 @@ function Context({ children }: { children: React.ReactNode }) {
         data,
         handleClick,
         filteredData,
-        questionsArray,
         randomQuestion,
         askedQuestions,
         handleSubmit,
