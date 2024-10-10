@@ -1,4 +1,5 @@
-import { QuestionSection } from "@/app/components";
+import QuestionSection from "@/app/components/_molecules/questionSection/QuestionSection";
+
 
 export default function page() {
   return (
