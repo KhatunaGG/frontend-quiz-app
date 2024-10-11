@@ -9,7 +9,6 @@ function SubmitButton({
   resetQuiz,
   selectedAnswer,
 }: SubmitButtonType) {
-
   const submitAnswer = () => {
     if (resetQuiz) {
       resetQuiz();
@@ -23,9 +22,8 @@ function SubmitButton({
       ) {
         setAskedQuestions([]);
       }
-
     }
-  }
+  };
 
   return (
     <button

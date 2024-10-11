@@ -1,16 +1,15 @@
 "use client";
-import {
-  createContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useEffect, useState } from "react";
 import quizData from "../data.json";
 import { useRouter } from "next/navigation";
-import { GlobalContextType, OptionsType, QuestionType, QuizType } from "../interfaces/interface";
-
+import {
+  GlobalContextType,
+  OptionsType,
+  QuestionType,
+  QuizType,
+} from "../interfaces/interface";
 
 export const GlobalContext = createContext<GlobalContextType | null>(null);
-
 
 function Context({ children }: { children: React.ReactNode }) {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -30,9 +29,6 @@ function Context({ children }: { children: React.ReactNode }) {
   const [option, setOption] = useState<string | null>();
   const router = useRouter();
 
-  console.log(count, 'count')
-
-
   useEffect(() => {
     setData(quizData);
   }, []);
@@ -49,7 +45,6 @@ function Context({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      
       const storedAskedQuestions = JSON.parse(
         localStorage.getItem("askedQuestions") || "[]"
       );
@@ -140,7 +135,6 @@ function Context({ children }: { children: React.ReactNode }) {
     }
   };
 
-
   const handleClick = (title: string | undefined) => {
     const filtered = data.find((el) => el.title === title);
     if (filtered) {
@@ -151,9 +145,9 @@ function Context({ children }: { children: React.ReactNode }) {
   };
 
   const getNextRandomQuestion = () => {
-    if (!filteredData) return;
-    if (askedQuestions.length < filteredData.questions.length) {
-      const remainingQuestions = filteredData.questions.filter(
+    if (!filteredData?.questions) return;
+    if (askedQuestions.length < filteredData?.questions.length) {
+      const remainingQuestions = filteredData?.questions.filter(
         (q) => !askedQuestions.includes(q)
       );
       const randomIndex = Math.floor(Math.random() * remainingQuestions.length);
@@ -166,17 +160,16 @@ function Context({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    if (filteredData) {
+    if (filteredData && askedQuestions.length === 0) {
       getNextRandomQuestion();
     }
-  }, [filteredData]);
+  }, [filteredData, askedQuestions]);
 
   const getAnswer = (answer: string) => {
     setSelectedAnswer(answer);
   };
 
   const handleSubmit = () => {
-
     setClickCount(0);
     if (clickCount === 0) {
       submitAll();
@@ -187,8 +180,8 @@ function Context({ children }: { children: React.ReactNode }) {
     if (randomQuestion?.answer === selectedAnswer) {
       setCount((prev) => prev + 1);
     }
-    setSelectedAnswer('')
-    if(selectedAnswer) {
+    setSelectedAnswer("");
+    if (selectedAnswer) {
       getNextRandomQuestion();
     }
   };
@@ -199,8 +192,8 @@ function Context({ children }: { children: React.ReactNode }) {
     setRandomQuestion(null);
     setAskedQuestions([]);
     setSelectedAnswer(null);
-    router.push("/");
     localStorage.clear();
+    router.push("/");
   };
 
   const checkWindowSize = () => {

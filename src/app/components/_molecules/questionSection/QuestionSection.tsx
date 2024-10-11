@@ -21,6 +21,7 @@ const QuestionSection = () => {
     count,
     optionsWithLabels,
     setCount,
+    
   } = context;
 
   return (
