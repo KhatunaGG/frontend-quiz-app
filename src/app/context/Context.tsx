@@ -194,13 +194,13 @@ function Context({ children }: { children: React.ReactNode }) {
   };
 
   const resetQuiz = () => {
-    localStorage.clear();
+    setCount(0);
     setFilteredData(null);
     setRandomQuestion(null);
     setAskedQuestions([]);
-    router.push("/");
     setSelectedAnswer(null);
-    setCount(0);
+    router.push("/");
+    localStorage.clear();
   };
 
   const checkWindowSize = () => {
